@@ -1,0 +1,33 @@
+
+import mongoose, { Schema, Document } from "mongoose";
+
+export interface IRider extends Document {
+  email: string;
+  password: string;
+  vehicleType: string;
+}
+
+const RiderSchema: Schema = new Schema({
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  vehicleType: { type: String, required: true },
+});
+
+const Rider = mongoose.model<IRider>("rider", RiderSchema);
+
+export default Rider;
+
+
+// controller
+export const createUser = async (req: Request, res: Response) => {
+  try {
+    const { error, data } = await UserService.createUser(req.body);
+    if (error) {
+      return ResponseHandler.validationError(res, null, error);
+    }
+    return ResponseHandler.success(res, data, "User created successfully");
+  } catch (error) {
+    return ResponseHandler.validationError(res, null, error.message);
+  }
+};
+zma-noxa-oje
